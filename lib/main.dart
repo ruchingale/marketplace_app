@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart'; // Added import for kIsWeb
 import 'package:flutter/material.dart';
+import 'sellInfor.dart';
 
 import 'homeSeller.dart';
 
