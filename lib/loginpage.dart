@@ -1,6 +1,6 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last
-
 import 'package:flutter/material.dart';
+import 'homeSeller.dart';
+import 'homepg.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -102,6 +102,18 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     // Form is valid, perform login logic here
+                                    // For demonstration purposes, navigate based on dropdown value
+                                    if (dropDownValue == "Buyer") {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Homepage()),
+                                      );
+                                    } else if (dropDownValue == "Seller") {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => HomeSellerPage()),
+                                      );
+                                    }
                                   }
                                 },
                                 child: Text(

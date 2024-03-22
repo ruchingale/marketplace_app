@@ -4,8 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart'; // Added import for kIsWeb
 import 'package:flutter/material.dart';
 import 'homepg.dart';
-import 'order_received.dart';
 import 'homeSeller.dart';
+import 'loginpage.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'FlutterDemo',
       debugShowCheckedModeBanner: false,
-      home: Homepage(),
+      home: LoginPage(),
     );
   }
 }

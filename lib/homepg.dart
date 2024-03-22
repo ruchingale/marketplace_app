@@ -228,7 +228,7 @@ class _HomepageState extends State<Homepage> {
               Navigator.pushNamed(context, '/');
               break;
             case 1:
-              Navigator.pushNamed(context, '/recipes');
+              Navigator.pushNamed(context, '/sr_buyer');
               break;
             case 2:
               Navigator.pushNamed(context, '/cart');
