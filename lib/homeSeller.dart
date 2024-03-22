@@ -10,69 +10,66 @@ class HomeSellerPage extends StatefulWidget {
 class _HomeSellerPageState extends State<HomeSellerPage> {
   int completedOrders = 50;
   int pendingOrders = 10;
+  int _currentIndex = 0; // Index for bottom navigation bar
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 248, 196, 93),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image.asset(
+              "lib/assets/image_5.png",
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.topCenter,
+            ),
+            SizedBox(height: 20),
+            // First Card: Add Item
+            _buildCard(
+              icon: Icons.add,
+              title: 'Add item',
+              onTap: () {
+                // Add your logic here for adding an item
+              },
+            ),
+            SizedBox(height: 10),
+            // Second Card: Seller Info
+            _buildCard(
+              icon: Icons.person,
+              title: 'Seller info',
+              onTap: () {
+                // Add your logic here for seller info
+              },
+            ),
+            SizedBox(height: 10),
+            // Third Card: Order Received
+            _buildCard(
+              icon: Icons.shopping_cart,
+              title: 'Order received',
+              onTap: () {
+                // Add your logic here for order received
+              },
+            ),
+            SizedBox(height: 10),
+            // Fourth and Fifth Cards: Completed and Pending Orders
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Image.asset(
-                  "lib/assets/image_5.png",
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.topCenter,
+                _buildHorizontalCard(
+                  title: 'Completed Orders',
+                  count: completedOrders,
+                  color: Colors.green,
                 ),
-                SizedBox(height: 20),
-                // First Card: Add Item
-                _buildCard(
-                  icon: Icons.add,
-                  title: 'Add item',
-                  onTap: () {
-                    // Add your logic here for adding an item
-                  },
-                ),
-                SizedBox(height: 10),
-                // Second Card: Seller Info
-                _buildCard(
-                  icon: Icons.person,
-                  title: 'Seller info',
-                  onTap: () {
-                    // Add your logic here for seller info
-                  },
-                ),
-                SizedBox(height: 10),
-                // Third Card: Order Received
-                _buildCard(
-                  icon: Icons.shopping_cart,
-                  title: 'Order received',
-                  onTap: () {
-                    // Add your logic here for order received
-                  },
-                ),
-                SizedBox(height: 10),
-                // Fourth and Fifth Cards: Completed and Pending Orders
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildHorizontalCard(
-                      title: 'Completed Orders',
-                      count: completedOrders,
-                      color: Colors.green,
-                    ),
-                    _buildHorizontalCard(
-                      title: 'Pending Orders',
-                      count: pendingOrders,
-                      color: Colors.red,
-                    ),
-                  ],
+                _buildHorizontalCard(
+                  title: 'Pending Orders',
+                  count: pendingOrders,
+                  color: Colors.red,
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
