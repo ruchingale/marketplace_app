@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'sellInfor.dart';
 import 'sellItem.dart';
+import 'order_received.dart';
+import 'sr_seller.dart';
 
 class HomeSellerPage extends StatefulWidget {
   const HomeSellerPage({Key? key}) : super(key: key);
@@ -79,7 +81,11 @@ class _HomeSellerPageState extends State<HomeSellerPage> {
               icon: Icons.shopping_cart,
               title: 'Order received',
               onTap: () {
-                // Add your logic here for order received
+                // Navigate to SellInfoPage
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OrderReceivedPage()),
+                );
               },
             ),
             SizedBox(height: 20),
@@ -88,7 +94,11 @@ class _HomeSellerPageState extends State<HomeSellerPage> {
               icon: Icons.share,
               title: 'Share Your Recipe',
               onTap: () {
-                // Add your logic here for order received
+                // Navigate to SellInfoPage
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RecipePage()),
+                );
               },
             ),
             SizedBox(height: 20),
