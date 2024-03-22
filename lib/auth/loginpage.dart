@@ -39,6 +39,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   bool isLoading = false;
+ 
+
+
+
+  //text  controller
+final _emailController=TextEditingController();
+final _passwordController=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: [
                           TextFormField(
+                            controller: _emailController,
                             decoration: InputDecoration(
                               hintText: 'Email',
                               fillColor: Colors.white,
@@ -85,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(height: 10),
                           TextFormField(
+                            controller: _passwordController,
                             decoration: InputDecoration(
                               hintText: 'Password',
                               fillColor: Colors.white,
