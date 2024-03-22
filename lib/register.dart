@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables
+
 import 'package:culinary_marketplace/loginpage.dart';
 import 'package:flutter/material.dart';
 

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 void main() {

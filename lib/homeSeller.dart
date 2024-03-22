@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, use_super_parameters, prefer_final_fields
+
 import 'package:flutter/material.dart';
 
 class HomeSellerPage extends StatefulWidget {

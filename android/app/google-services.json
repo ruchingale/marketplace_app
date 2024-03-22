@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "767156439811",
+    "project_id": "homemade-harvest-c9b3f",
+    "storage_bucket": "homemade-harvest-c9b3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767156439811:android:62ba512628153a9a003736",
+        "android_client_info": {
+          "package_name": "com.example.culinary_marketplace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpFtJW7NU_4zzjrcoDuh49m0BrvnwK_8o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
