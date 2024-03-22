@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'sellInfor.dart';
+import 'sellItem.dart';
 
 class HomeSellerPage extends StatefulWidget {
   const HomeSellerPage({Key? key}) : super(key: key);
@@ -24,25 +26,52 @@ class _HomeSellerPageState extends State<HomeSellerPage> {
               fit: BoxFit.scaleDown,
               alignment: Alignment.topCenter,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             // First Card: Add Item
+            Text('Welcome',
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
+            Text('HomeChef!!!!',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                )),
+            // Text('ADD YOUR PRODUCTS HERE',
+            //     style: TextStyle(
+            //       fontSize: 18,
+            //       fontWeight: FontWeight.bold,
+            //       color: Colors.red,
+            //     )),
+            SizedBox(height: 20),
             _buildCard(
               icon: Icons.add,
               title: 'Add item',
               onTap: () {
-                // Add your logic here for adding an item
+                // Navigate to SellInfoPage
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InputFieldsScreen()),
+                );
               },
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             // Second Card: Seller Info
             _buildCard(
               icon: Icons.person,
               title: 'Seller info',
               onTap: () {
-                // Add your logic here for seller info
+                // Navigate to SellInfoPage
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SellInfoPage()),
+                );
               },
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             // Third Card: Order Received
             _buildCard(
               icon: Icons.shopping_cart,
@@ -51,22 +80,35 @@ class _HomeSellerPageState extends State<HomeSellerPage> {
                 // Add your logic here for order received
               },
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
+            // Third Card: Order Received
+            _buildCard(
+              icon: Icons.share,
+              title: 'Share Your Recipe',
+              onTap: () {
+                // Add your logic here for order received
+              },
+            ),
+            SizedBox(height: 20),
             // Fourth and Fifth Cards: Completed and Pending Orders
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildHorizontalCard(
-                  title: 'Completed Orders',
-                  count: completedOrders,
-                  color: Colors.green,
-                ),
-                _buildHorizontalCard(
-                  title: 'Pending Orders',
-                  count: pendingOrders,
-                  color: Colors.red,
-                ),
-              ],
+            SingleChildScrollView(
+              // Wrap the Row with SingleChildScrollView
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildHorizontalCard(
+                    title: 'Completed Orders',
+                    count: completedOrders,
+                    color: Colors.green,
+                  ),
+                  _buildHorizontalCard(
+                    title: 'Pending Orders',
+                    count: pendingOrders,
+                    color: Colors.red,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -122,8 +164,8 @@ class _HomeSellerPageState extends State<HomeSellerPage> {
   Widget _buildHorizontalCard(
       {required String title, required int count, required Color color}) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.4,
-      height: 100,
+      // width: 150, // No need to specify width
+      // height: 100, // No need to specify height
       margin: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: color,
@@ -139,8 +181,9 @@ class _HomeSellerPageState extends State<HomeSellerPage> {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          // Wrap the Row with Column
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
@@ -151,13 +194,27 @@ class _HomeSellerPageState extends State<HomeSellerPage> {
                 color: Colors.white,
               ),
             ),
-            Text(
-              '$count',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+            SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Count:',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(width: 5),
+                Text(
+                  '$count',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

@@ -39,7 +39,7 @@ dependencies:
   email_validator: ^2.1.16
   flutter_spinkit: ^5.2.0
   intl: ^0.19.0
-  geolocator: ^10.1.0
+  geolocator: ^11.0.0
   permission_handler: ^11.2.0
 
 
@@ -75,7 +75,7 @@ flutter:
     - lib\assets\food.PNG
     - lib\assets\food2.png
     - lib\assets\image_4.png
-    - lib\assets\chef.png
+    - lib\assets\chef.PNG
     - lib\assets\sweets.png
     - lib\assets\sweets2.png
   #   - images/a_dot_ham.jpeg
