@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SellInfoPage extends StatefulWidget {
   const SellInfoPage({Key? key}) : super(key: key);
@@ -8,20 +9,29 @@ class SellInfoPage extends StatefulWidget {
 }
 
 class _SellInfoPageState extends State<SellInfoPage> {
-  late Map<String, dynamic> sellerInfo;
+  List<Map<String, dynamic>> sellers = []; // Initialize sellers as an empty list
 
   @override
   void initState() {
     super.initState();
-    // Fetch seller information (demo data)
-    sellerInfo = {
-      'name': 'John Doe',
-      'email': 'johndoe@example.com',
-      'address': '123 Main St, City',
-      'phone': '123-456-7890',
-      'shopName': 'John Doe Shop', // Add shop name
-      // Add more fields as needed
-    };
+    fetchSellerInfo(); // Fetch seller information from Firestore
+  }
+
+  Future<void> fetchSellerInfo() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> sellerSnapshot =
+          await FirebaseFirestore.instance.collection('seller').get();
+
+      if (sellerSnapshot.docs.isNotEmpty) {
+        setState(() {
+          sellers = sellerSnapshot.docs.map((doc) => doc.data()).toList();
+        });
+      } else {
+        print('No seller information found');
+      }
+    } catch (e) {
+      print('Error fetching seller information: $e');
+    }
   }
 
   @override
@@ -43,27 +53,27 @@ class _SellInfoPageState extends State<SellInfoPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.infinity, // Make the card take entire screen width
-              child: Card(
-                elevation: 5,
-                margin: EdgeInsets.symmetric(vertical: 8),
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInfoField('Seller Name', sellerInfo['name']),
-                      _buildInfoField('Email', sellerInfo['email']),
-                      _buildInfoField('Address', sellerInfo['address']),
-                      _buildInfoField('Phone', sellerInfo['phone']),
-                      // Add shop name field
-                      // Add more fields as needed
-                    ],
+            for (var seller in sellers) ...[
+              Container(
+                width: double.infinity, // Make the card take entire screen width
+                child: Card(
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(vertical: 8),
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildInfoField('Seller Name', seller['name']),
+                        _buildInfoField('Email', seller['email']),
+                        _buildInfoField('Address', seller['address']),
+                        // Add more fields as needed
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ],
         ),
       ),
