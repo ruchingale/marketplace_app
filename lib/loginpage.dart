@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'homeSeller.dart';
 import 'homepg.dart';
+import 'register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,14 +18,13 @@ class _LoginPageState extends State<LoginPage> {
   String email = "";
   String password = "";
   final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter an email';
     }
-
-    // You can add more complex email validation logic here if needed
-
     return null;
   }
 
@@ -32,13 +35,58 @@ class _LoginPageState extends State<LoginPage> {
     if (value.length < 6) {
       return 'Password must be 6 characters long';
     }
-
-    // You can add more password validation logic here if needed
-
     return null;
   }
 
-  bool isLoading = false;
+  Future<void> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (userCredential.user != null) {
+        // User signed in successfully, now check the role (Seller/Buyer)
+        if (dropDownValue == "Seller") {
+          // Check if the user exists in the seller collection
+          QuerySnapshot<Map<String, dynamic>> sellers = await _firestore
+              .collection('seller')
+              .where('email', isEqualTo: email)
+              .get();
+
+          if (sellers.docs.isNotEmpty) {
+            // User is a seller, navigate to seller's home page
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomeSellerPage()),
+            );
+          } else {
+            print('Seller not found in database');
+          }
+        } else if (dropDownValue == "Buyer") {
+          // Check if the user exists in the buyer collection
+          QuerySnapshot<Map<String, dynamic>> buyers = await _firestore
+              .collection('buyer')
+              .where('email', isEqualTo: email)
+              .get();
+
+          if (buyers.docs.isNotEmpty) {
+            // User is a buyer, navigate to buyer's home page
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Homepage()),
+            );
+          } else {
+            print('Buyer not found in database');
+          }
+        }
+      } else {
+        print('User credentials not found');
+      }
+    } catch (e) {
+      print('Error signing in: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,19 +149,9 @@ class _LoginPageState extends State<LoginPage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
                                     // Form is valid, perform login logic here
-                                    // For demonstration purposes, navigate based on dropdown value
-                                    if (dropDownValue == "Buyer") {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => Homepage()),
-                                      );
-                                    } else if (dropDownValue == "Seller") {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => HomeSellerPage()),
-                                      );
-                                    }
+                                    signInWithEmailAndPassword(email, password);
                                   }
                                 },
                                 child: Text(
@@ -134,6 +172,24 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // Navigate to SellInfoPage
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                      );
+                    },
+                    child: Text(
+                      "New user ? Sign up",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        //decoration: TextDecoration.underline,
                       ),
                     ),
                   ),
