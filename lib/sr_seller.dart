@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,6 +29,8 @@ class _RecipePageState extends State<RecipePage> {
   String _foodName = '';
   String _duration = '';
   String _instructions = '';
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -101,8 +104,29 @@ class _RecipePageState extends State<RecipePage> {
                   Row(
                     children: [
                       ElevatedButton(
-                        onPressed: () {
-                          // Add your upload logic here
+                        onPressed: () async {
+                          // Upload data to Firestore
+                          try {
+                            await _firestore.collection('Recipe').add({
+                              'foodName': _foodName,
+                              'duration': _duration,
+                              'instructions': _instructions,
+                            });
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Recipe uploaded successfully'),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Error uploading recipe: $e'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,

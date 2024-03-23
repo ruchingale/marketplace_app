@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,16 +31,18 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
   final TextEditingController _input3Controller = TextEditingController();
   final TextEditingController _input4Controller = TextEditingController();
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('<'),
+        title: Text('Input Fields'),
       ),
       body: Column(
         children: [
           Image.asset(
-            'lib/assets/chef.PNG', // Replace 'your_image.png' with the path to your image asset
+            'lib/assets/chef.PNG',
             fit: BoxFit.cover,
           ),
           Expanded(
@@ -89,18 +92,36 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
                   ),
                   SizedBox(height: 32.0),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       // Access input values here
                       final input1 = _input1Controller.text;
                       final input2 = _input2Controller.text;
                       final input3 = _input3Controller.text;
                       final input4 = _input4Controller.text;
 
-                      // Do something with the inputs (e.g., validation, processing)
-                      print('Input 1: $input1');
-                      print('Input 2: $input2');
-                      print('Input 3: $input3');
-                      print('Input 4: $input4');
+                      // Add data to Firestore 'Products' collection
+                      try {
+                        await _firestore.collection('Products').add({
+                          'name': input1,
+                          'description': input2,
+                          'price': input3,
+                          'category': input4,
+                        });
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Data added to Firestore'),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Error: $e'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
                     },
                     style: ButtonStyle(
                         backgroundColor:

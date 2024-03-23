@@ -7,6 +7,7 @@ import 'homepg.dart';
 import 'homeSeller.dart';
 import 'loginpage.dart';
 import 'register.dart';
+import 'sr_seller.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'FlutterDemo',
       debugShowCheckedModeBanner: false,
-      home: RegisterPage(),
+      home: RecipePage(),
     );
   }
 }
